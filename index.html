@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inspacio – See your dream home before you buy it</title>
+<meta name="description" content="Inspacio is an AI Design Twin that turns your Pinterest and Instagram taste into photorealistic interior designs for your exact apartment floor plan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C00000;--orange:#F26A2A;--grey:#F2F2F2;--text:#555;--dark:#222;--shadow:0 6px 24px rgba(0,0,0,.08);--r:18px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:'Inter',sans-serif;color:var(--text);background:#fff;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.logo,.btn{font-family:'Poppins',sans-serif}
+h1,h2,h3{color:var(--dark);line-height:1.2}
+.container{width:min(1140px,92%);margin:0 auto}
+.narrow{width:min(640px,92%)}
+.section{padding:72px 0}
+.grey{background:var(--grey)}
+h2{font-size:clamp(1.7rem,4vw,2.4rem);text-align:center;margin-bottom:40px;font-weight:700}
+
+/* Buttons */
+.btn{display:inline-block;padding:12px 26px;border-radius:50px;font-weight:600;font-size:.95rem;border:2px solid var(--red);cursor:pointer;transition:.25s}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--orange);border-color:var(--orange);transform:translateY(-2px);box-shadow:0 8px 20px rgba(242,106,42,.35)}
+.btn-outline{background:transparent;color:var(--red)}
+.btn-outline:hover{background:var(--red);color:#fff;transform:translateY(-2px)}
+
+/* Navbar */
+.navbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-size:1.6rem;font-weight:800;color:var(--red)}
+.logo span{color:var(--orange)}
+.logo.light{color:#fff}
+.menu-btn{display:none;background:none;border:0;font-size:1.7rem;cursor:pointer;color:var(--dark)}
+.nav-links{display:flex;align-items:center;gap:26px;font-weight:500;font-size:.95rem}
+.nav-links a:not(.btn):hover{color:var(--red)}
+.nav-cta{padding:9px 20px;color:#fff}
+
+/* Hero */
+.hero{padding:56px 0 72px;background:linear-gradient(180deg,#fff,var(--grey))}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:800;margin-bottom:18px}
+h1 em{font-style:normal;color:var(--red)}
+.hero-text p{font-size:1.1rem;margin-bottom:28px;max-width:480px}
+.btn-row{display:flex;gap:14px;flex-wrap:wrap}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ba figure{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:#ddd;aspect-ratio:3/4}
+.ba img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.ba figure:hover img{transform:scale(1.06)}
+figcaption{position:absolute;left:12px;bottom:12px;background:#fff;color:var(--dark);font-size:.8rem;font-weight:600;padding:4px 14px;border-radius:50px}
+figcaption.after{background:var(--red);color:#fff}
+
+/* Cards & grids */
+.grid2,.grid3,.grid4{display:grid;gap:24px}
+.grid2{grid-template-columns:repeat(2,1fr)}
+.grid3{grid-template-columns:repeat(3,1fr)}
+.grid4{grid-template-columns:repeat(4,1fr)}
+.card{background:#fff;border-radius:var(--r);padding:28px;box-shadow:var(--shadow);transition:.3s}
+.card:hover{transform:translateY(-6px);box-shadow:0 14px 34px rgba(192,0,0,.15)}
+.card h3{font-size:1.1rem;margin-bottom:8px}
+.icon{font-size:2rem;margin-bottom:12px}
+.stat-card{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;text-align:left;background:var(--red);color:#fff;border-radius:var(--r);padding:36px;margin-bottom:28px;box-shadow:var(--shadow)}
+.big{font-family:'Poppins',sans-serif;font-size:clamp(3.5rem,9vw,5.5rem);font-weight:800;color:#fff;line-height:1}
+.stat-text{font-size:1.4rem;font-weight:600;font-family:'Poppins',sans-serif}
+.stat-card small{opacity:.85}
+.step{text-align:center;position:relative;padding-top:40px}
+.num{position:absolute;top:-16px;left:50%;transform:translateX(-50%);width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center;font-family:'Poppins',sans-serif}
+.who{border-top:5px solid var(--orange)}
+.who h3{font-size:1.3rem}
+
+/* App preview */
+.phones{display:flex;gap:28px;overflow-x:auto;padding:12px 8px 28px;scroll-snap-type:x mandatory}
+.phone{flex:0 0 200px;scroll-snap-align:center;text-align:center}
+.phone p{margin-top:12px;font-weight:600;font-size:.9rem;color:var(--dark)}
+.screen{height:380px;border:8px solid #222;border-radius:32px;background:#fff;padding:18px 12px;display:flex;flex-direction:column;gap:10px;text-align:left;box-shadow:var(--shadow);overflow:hidden}
+.screen b{font-family:'Poppins',sans-serif;font-size:.85rem;color:var(--dark)}
+.screen i{display:block;height:70px;border-radius:12px;background:linear-gradient(135deg,#f6d3d3,var(--grey))}
+.screen u{display:block;height:30px;border-radius:50px;background:var(--red);margin-top:auto}
+.screen span{background:var(--grey);border-radius:50px;padding:5px 12px;font-size:.75rem;width:fit-content}
+.screen .plan{height:150px;border:2px dashed var(--orange);border-radius:12px;background:repeating-linear-gradient(0deg,transparent 0 19px,#eee 19px 20px)}
+.screen img{height:220px;width:100%;object-fit:cover;border-radius:12px;background:#ddd}
+.two{display:flex;gap:8px}.two em{flex:1;height:180px;border-radius:12px;background:linear-gradient(135deg,#f9c9a8,#f6d3d3)}
+.two em+em{background:linear-gradient(135deg,#d7d7d7,var(--grey))}
+
+/* Table */
+.table-wrap{overflow-x:auto;border-radius:var(--r);box-shadow:var(--shadow)}
+table{width:100%;border-collapse:collapse;min-width:640px;background:#fff;text-align:center}
+th,td{padding:16px;border-bottom:1px solid #eee}
+th{font-family:'Poppins',sans-serif;color:var(--dark);font-size:.9rem}
+td:first-child{text-align:left;font-weight:500}
+.hl{background:#fff1ee;color:var(--red);font-weight:700}
+tbody tr:hover{background:#fafafa}
+
+/* Results */
+.red-band{background:linear-gradient(135deg,var(--red),#8f0000);color:#fff}
+.red-band h2{color:#fff}
+.stats{text-align:center}
+.stats strong{display:block;font-family:'Poppins',sans-serif;font-size:3.2rem;font-weight:800}
+.stats span{opacity:.9}
+
+/* Pricing */
+.price{text-align:center}
+.price.featured{border:2px solid var(--orange)}
+.amt{font-family:'Poppins',sans-serif;font-size:2.6rem;font-weight:800;color:var(--red);margin:12px 0}
+.amt small{display:block;font-size:.9rem;font-weight:500;color:var(--text)}
+.price ul{list-style:none;margin:20px 0 26px}
+.price li{padding:6px 0}
+.price li::before{content:"✔ ";color:var(--orange);font-weight:700}
+
+/* Form */
+.form{display:flex;flex-direction:column;gap:16px}
+label{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:.9rem;color:var(--dark)}
+input,select,textarea{font:inherit;padding:12px 14px;border:1.5px solid #ddd;border-radius:12px;background:#fff;color:var(--dark);transition:.2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px rgba(242,106,42,.2)}
+input.err,select.err{border-color:var(--red)}
+.success{background:#e8f7ec;color:#1d6b35;padding:14px;border-radius:12px;text-align:center}
+.contact-line{text-align:center;margin-top:24px}
+.contact-line a{color:var(--red);font-weight:600}
+.social{display:flex;justify-content:center;gap:12px;margin-top:14px}
+.social a{width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:700;transition:.25s}
+.social a:hover{background:var(--orange);transform:translateY(-3px)}
+
+/* Footer */
+.footer{background:#1c1c1c;color:#bbb;padding:48px 0 20px}
+.foot-grid{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;padding-bottom:28px;border-bottom:1px solid #333}
+.foot-grid p{max-width:320px;margin-top:10px}
+.footer nav{display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start}
+.footer nav a:hover{color:var(--orange)}
+.copy{text-align:center;font-size:.85rem;padding-top:20px;padding-inline:4%}
+
+/* Back to top */
+#toTop{position:fixed;right:20px;bottom:20px;width:46px;height:46px;border:0;border-radius:50%;background:var(--red);color:#fff;font-size:1.3rem;cursor:pointer;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;z-index:60}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{background:var(--orange);transform:translateY(-3px)}
+
+/* Fade-in */
+.fade{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.fade.visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.fade{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+
+/* Responsive */
+@media (max-width:900px){
+  .hero-grid,.grid2{grid-template-columns:1fr}
+  .grid3,.grid4{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:760px){
+  .menu-btn{display:block}
+  .nav-links{position:absolute;top:68px;left:0;right:0;flex-direction:column;background:#fff;padding:20px;gap:18px;box-shadow:0 10px 20px rgba(0,0,0,.08);display:none}
+  .nav-links.open{display:flex}
+  .section{padding:56px 0}
+}
+@media (max-width:560px){
+  .grid3,.grid4{grid-template-columns:1fr}
+  .stat-card{text-align:center;padding:28px 20px}
+  .btn-row .btn{width:100%;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar" id="home">
+  <div class="container nav-inner">
+    <a href="#home" class="logo">Insp<span>acio</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    <nav class="nav-links" id="navLinks" aria-label="Main">
+      <a href="#home">Home</a><a href="#problem">Problem</a><a href="#how">How It Works</a>
+      <a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a>
+      <a href="#contact" class="btn btn-red nav-cta">Try Inspacio</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text fade">
+      <h1>See your dream home <em>before you buy it.</em></h1>
+      <p>Inspacio turns your Pinterest and Instagram taste into photorealistic interior designs for your exact apartment floor plan.</p>
+      <div class="btn-row">
+        <a href="#contact" class="btn btn-red">Get Early Access</a>
+        <a href="#how" class="btn btn-outline">See How It Works</a>
+      </div>
+    </div>
+    <div class="ba fade" aria-label="Before and after room comparison">
+      <figure><img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=700&q=70" alt="Empty unfurnished apartment room"><figcaption>Before</figcaption></figure>
+      <figure><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=700&q=70" alt="Beautifully designed modern living room"><figcaption class="after">After</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="section grey" id="problem">
+  <div class="container">
+    <h2 class="fade">Buying a home shouldn't be a guess.</h2>
+    <div class="stat-card fade">
+      <div class="big">81%</div>
+      <div><p class="stat-text">of buyers struggle to visualize empty spaces</p>
+      <small>Source: National Association of Realtors (NAR), Profile of Home Staging</small></div>
+    </div>
+    <div class="grid3">
+      <article class="card fade"><div class="icon">🤔</div><h3>Buyers</h3><p>Buyers face uncertainty and delayed decisions.</p></article>
+      <article class="card fade"><div class="icon">🔁</div><h3>Designers</h3><p>Designers lose time on repeated revisions.</p></article>
+      <article class="card fade"><div class="icon">💸</div><h3>Cost</h3><p>Hiring designers is expensive and slow.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how">
+  <div class="container">
+    <h2 class="fade">How it works</h2>
+    <div class="grid4">
+      <article class="card step fade"><span class="num">1</span><div class="icon">📌</div><p>Connect your Pinterest/Instagram saves</p></article>
+      <article class="card step fade"><span class="num">2</span><div class="icon">📐</div><p>Upload your apartment floor plan</p></article>
+      <article class="card step fade"><span class="num">3</span><div class="icon">🎨</div><p>Set your room type, style, colors and budget</p></article>
+      <article class="card step fade"><span class="num">4</span><div class="icon">✨</div><p>Get your photorealistic AI design in seconds</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section grey" id="features">
+  <div class="container">
+    <h2 class="fade">Features</h2>
+    <div class="grid3">
+      <article class="card fade"><div class="icon">🖼️</div><h3>Photorealistic design generation</h3><p>Lifelike renders of your future rooms.</p></article>
+      <article class="card fade"><div class="icon">🧠</div><h3>Social media taste analysis</h3><p>Learns your style from what you save.</p></article>
+      <article class="card fade"><div class="icon">📏</div><h3>Floor plan customization</h3><p>Designs fit your exact layout.</p></article>
+      <article class="card fade"><div class="icon">💰</div><h3>Budget-aware suggestions</h3><p>Ideas that respect your budget.</p></article>
+      <article class="card fade"><div class="icon">⚖️</div><h3>Compare styles side by side</h3><p>Pick your favourite with confidence.</p></article>
+      <article class="card fade"><div class="icon">📋</div><h3>Shareable mood boards</h3><p>Share designs with family and friends.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- APP PREVIEW -->
+<section class="section" id="preview">
+  <div class="container">
+    <h2 class="fade">App preview</h2>
+    <div class="phones" tabindex="0" aria-label="App screens, scroll horizontally">
+      <div class="phone"><div class="screen s1"><b>Hi, Ananya 👋</b><i></i><i></i><u></u></div><p>Home</p></div>
+      <div class="phone"><div class="screen s2"><b>Upload floor plan</b><div class="plan"></div><u></u></div><p>Upload Floor Plan</p></div>
+      <div class="phone"><div class="screen s3"><b>Preferences</b><span>Modern</span><span>Boho</span><span>Minimal</span><i></i><u></u></div><p>Preferences</p></div>
+      <div class="phone"><div class="screen s4"><img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=300&q=70" alt="AI generated living room design preview"><b>Your design</b></div><p>AI Design Result</p></div>
+      <div class="phone"><div class="screen s5"><b>Compare</b><div class="two"><em></em><em></em></div><u></u></div><p>Compare Designs</p></div>
+      <div class="phone"><div class="screen s6"><b>Saved designs</b><i></i><i></i><i></i></div><p>Saved Designs</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="section grey">
+  <div class="container">
+    <h2 class="fade">Who it's for</h2>
+    <div class="grid2">
+      <article class="card who fade"><h3>Home Buyers</h3><p>Design-conscious buyers aged 25–45 who want confidence before purchasing.</p></article>
+      <article class="card who fade"><h3>Developers &amp; Interior Design Firms</h3><p>Cut revisions, showcase properties and improve buyer engagement.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section" id="why">
+  <div class="container">
+    <h2 class="fade">Why Inspacio</h2>
+    <div class="table-wrap fade">
+      <table>
+        <thead><tr><th></th><th class="hl">Inspacio</th><th>Hiring a designer</th><th>Pinterest / Instagram</th><th>Generic 3D tools</th></tr></thead>
+        <tbody>
+          <tr><td>Personalized to your floor plan</td><td class="hl">✔</td><td>✔</td><td>✘</td><td>Partial</td></tr>
+          <tr><td>Speed</td><td class="hl">✔</td><td>Slow</td><td>✔</td><td>Slow</td></tr>
+          <tr><td>Cost</td><td class="hl">✔</td><td>High</td><td>Free</td><td>Medium</td></tr>
+          <tr><td>Photorealistic quality</td><td class="hl">✔</td><td>✔</td><td>✘</td><td>Partial</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="section red-band" id="results">
+  <div class="container">
+    <h2 class="fade">Early results from our prototype</h2>
+    <div class="grid3 stats">
+      <div class="fade"><strong>20</strong><span>users tested</span></div>
+      <div class="fade"><strong>16</strong><span>liked or loved it</span></div>
+      <div class="fade"><strong>80%</strong><span>positive response</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section" id="pricing">
+  <div class="container">
+    <h2 class="fade">Simple pricing</h2>
+    <div class="grid2">
+      <article class="card price fade">
+        <h3>For Home Buyers</h3>
+        <div class="amt">₹1,999 <small>per flat design project</small></div>
+        <ul><li>AI design</li><li>Style comparison</li><li>Mood board sharing</li><li>Budget suggestions</li></ul>
+        <a href="#contact" class="btn btn-red">Get Early Access</a>
+      </article>
+      <article class="card price featured fade">
+        <h3>For Developers</h3>
+        <div class="amt">₹999 <small>per flat on bulk plans</small></div>
+        <ul><li>AI design</li><li>Style comparison</li><li>Mood board sharing</li><li>Budget suggestions</li></ul>
+        <a href="#contact" class="btn btn-outline">Contact us</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section grey" id="contact">
+  <div class="container narrow">
+    <h2 class="fade">Get early access</h2>
+    <form id="waitlistForm" class="card form fade" novalidate>
+      <label>Name<input type="text" name="name" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+      <label>I am a...
+        <select name="role" required>
+          <option value="">Select one</option><option>Home Buyer</option><option>Developer</option><option>Interior Designer</option>
+        </select>
+      </label>
+      <label>Message<textarea name="message" rows="4"></textarea></label>
+      <button type="submit" class="btn btn-red">Join the Waitlist</button>
+      <p class="success" id="success" role="status" hidden>🎉 Thanks! You're on the waitlist. We'll be in touch soon.</p>
+    </form>
+    <p class="contact-line">Email us: <a href="mailto:hello@inspacio.example">hello@inspacio.example</a></p>
+    <div class="social">
+      <a href="#" aria-label="Instagram">IG</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="YouTube">▶</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="container foot-grid">
+    <div><a href="#home" class="logo light">Insp<span>acio</span></a><p>AI Design Twin that helps you see your dream home before you buy it.</p></div>
+    <nav aria-label="Footer"><a href="#problem">Problem</a><a href="#how">How It Works</a><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#contact">Contact</a></nav>
+  </div>
+  <p class="copy">© 2026 Inspacio. Built at G. Narayanamma Institute of Technology and Science, Hyderabad.</p>
+</footer>
+
+<button id="toTop" aria-label="Back to top">↑</button>
+
+<script>
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const navLinks = document.getElementById('navLinks');
+menuBtn.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded', open);
+  menuBtn.textContent = open ? '✕' : '☰';
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navLinks.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  menuBtn.textContent = '☰';
+}));
+
+// Fade-in on scroll
+const fades = document.querySelectorAll('.fade');
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  fades.forEach(el => io.observe(el));
+} else {
+  fades.forEach(el => el.classList.add('visible'));
+}
+
+// Back to top
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => toTop.classList.toggle('show', window.scrollY > 500));
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Waitlist form (no backend)
+const form = document.getElementById('waitlistForm');
+const success = document.getElementById('success');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  let valid = true;
+  form.querySelectorAll('[required]').forEach(f => {
+    const ok = f.value.trim() !== '' && (f.type !== 'email' || /^\S+@\S+\.\S+$/.test(f.value));
+    f.classList.toggle('err', !ok);
+    if (!ok) valid = false;
+  });
+  if (!valid) return;
+  success.hidden = false;
+  form.reset();
+  setTimeout(() => (success.hidden = true), 6000);
+});
+</script>
+</body>
+</html>
